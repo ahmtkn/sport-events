@@ -1,4 +1,4 @@
-FROM php:8.1.0-fpm
+FROM php:7.3-fpm
 
 RUN apt update
 RUN apt upgrade -y
