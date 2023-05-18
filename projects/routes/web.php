@@ -25,3 +25,5 @@ Route::get('/home', function () {
 
     return redirect()->route($routeName);
 });
+Auth::routes();
+
