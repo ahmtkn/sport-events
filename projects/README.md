@@ -1,61 +1,399 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+# Sport Events
 
-## About Laravel
+Geliştirdiğimiz projede spor etkinliklerinin aktif bir şekilde paylaşılarak. Hangi tarihte, hangi bölgede ne tür etkinlikler var bunun bilgisinin alındığı; paylaşıldığı bir websitesidir.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Özellikler
 
-## Learning Laravel
+- Kullanıcı Dostu
+- Canlı Renkler
+- Esnek Filtreleme
+- Admin Panel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+  
+## Kullanılan Teknolojiler
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**İstemci:** Javascript, Jquery, Html, Css, Boostrap
 
-## Laravel Sponsors
+**Sunucu:** PHP, Laravel
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+**Database:** MySql
 
-### Premium Partners
+**Sanalaştırma:** Docker
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+  
+## Yükleme 
 
-## Contributing
+Projeyi ilk olarak clonlamamız ve sanalaştırma için makinamıza Docker kurmamız gerekmektedir.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Projeyi klonlayın
 
-## Code of Conduct
+```bash
+  git clone https://github.com/ahmtkn/sport-events.git
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+Docker Kurulumundan sonra oluşturmuş olduğumuz imageleri containerlara çevirmek için docker uygulamasını başlatıp daha sonra terminalden proje dizinine girip aşağıda verilen adımları yapmamız lazım.
+```bash 
+  cd /docker
+  docker-compose up -d
+```
+Bu işlemden sonra containerlarımızın oluşturulmuş olması lazım.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Daha sonra proje dizininde terminale:
+```bash 
+  docker ps
+```
+Kodunu yazarak aktif çalışan containerlarımızı görmüş olacağız.
 
-## License
+Daha sonrasında bağımlılıklarımızı kurmak için sport-events_php containerının içine girmemiz lazım bunun içinde terminale aşağıdaki kodu uygulamamız lazım.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash 
+  docker exec -it "CONTAINER_ID" bash
+```
+Artık containerın içindeyiz. Bundan sonraki adımda; 
+
+.env.example dosyasını kopyalayıp .env olarak değiştirmemiz gerekmektedir.
+
+Daha sonra env dosyasında database congif bilgilerini güncelledikten sonra terminalden proje dizininin içinde şu kodu yazmamız gerekmektedir.
+
+```bash 
+  composer install
+```
+Böylelikle bağımlılıklarımız kurulmuş olacaktır.
+
+Daha sonrasında sırayla aşağıdaki kodu terminale yazmamız gerekmektedir
+```bash 
+  php artisan key:generate
+  php artisan optimize:clear
+  php artisan migrate:fresh --seed
+  php artisan storage:link
+```
+
+Projemiz ayağa kalkmış bulunmaktadır.
+
+Docker Desktop uygulamasından nginx containerında open in web diyerek projemizi tarayıcıda açmış olacağız.
+## API Kullanımı
+
+#### Permission
+
+```http
+  GET /api/v1/permissions
+```
+
+```http
+  POST /api/v1/permissions
+```
+
+```http
+  PUT /api/v1/permissions
+```
+
+```http
+  DELETE /api/v1/permissions
+```
+
+#### Permission getir
+
+```http
+  GET /api/v1/permissions/${permission}
+```
+#### Permission Güncelle
+
+```http
+  PUT /api/v1/permissions/${permission}
+```
+#### Permission Sil
+
+```http
+  Delete /api/v1/permissions/${permission}
+```
+| Parametre | Tip     |
+| :-------- | :------- |
+| `permission`      | `Permission` |
+
+
+#### Roles
+
+```http
+  GET /api/v1/roles
+```
+
+```http
+  POST /api/v1/roles
+```
+
+```http
+  PUT /api/v1/roles
+```
+
+```http
+  DELETE /api/v1/roles
+```
+
+#### Role getir
+
+```http
+  GET /api/v1/roles/${role}
+```
+#### Role Güncelle
+
+```http
+  PUT /api/v1/roles/${role}
+```
+#### Role Sil
+
+```http
+  Delete /api/v1/roles/${role}
+```
+| Parametre | Tip     | 
+| :-------- | :------- | 
+| `role`      | `Role` |
+
+
+
+#### Users
+
+```http
+  GET /api/v1/users
+```
+
+```http
+  POST /api/v1/users
+```
+
+```http
+  PUT /api/v1/users
+```
+
+```http
+  DELETE /api/v1/users
+```
+
+#### User getir
+
+```http
+  GET /api/v1/users/${user}
+```
+#### User Güncelle
+
+```http
+  PUT /api/v1/users/${user}
+```
+#### User Sil
+
+```http
+  Delete /api/v1/users/${user}
+```
+| Parametre | Tip     | 
+| :-------- | :------- |
+| `user`      | `User` |
+
+  
+
+#### Sports
+
+```http
+  GET /api/v1/sports
+```
+
+```http
+  POST /api/v1/sports
+```
+
+```http
+  PUT /api/v1/sports
+```
+
+```http
+  DELETE /api/v1/sports
+```
+
+#### Sport getir
+
+```http
+  GET /api/v1/sports/${sport}
+```
+#### Sport Güncelle
+
+```http
+  PUT /api/v1/sports/${sport}
+```
+#### Sport Sil
+
+```http
+  Delete /api/v1/sports/${sport}
+```
+| Parametre | Tip     | 
+| :-------- | :------- |
+| `sport`      | `Sport` |
+
+ 
+#### Regions
+
+```http
+  GET /api/v1/regions
+```
+
+```http
+  POST /api/v1/regions
+```
+
+```http
+  PUT /api/v1/regions
+```
+
+```http
+  DELETE /api/v1/regions
+```
+
+#### Region getir
+
+```http
+  GET /api/v1/regions/${region}
+```
+#### Region Güncelle
+
+```http
+  PUT /api/v1/regions/${region}
+```
+#### Region Sil
+
+```http
+  Delete /api/v1/regions/${region}
+```
+| Parametre | Tip     | 
+| :-------- | :------- |
+| `region`      | `Region` |
+  
+#### Charities
+
+```http
+  GET /api/v1/charities
+```
+
+```http
+  POST /api/v1/charities
+```
+
+```http
+  PUT /api/v1/charities
+```
+
+```http
+  DELETE /api/v1/charities
+```
+
+#### Charity getir
+
+```http
+  GET /api/v1/charities/${charity}
+```
+#### Charity Güncelle
+
+```http
+  PUT /api/v1/charities/${charity}
+```
+#### Charity Sil
+
+```http
+  Delete /api/v1/charities/${charity}
+```
+| Parametre | Tip     | 
+| :-------- | :------- |
+| `charity`      | `Charity` |
+   
+#### Events
+
+```http
+  GET /api/v1/events
+```
+
+```http
+  POST /api/v1/events
+```
+
+```http
+  PUT /api/v1/events
+```
+
+```http
+  DELETE /api/v1/events
+```
+
+#### Event getir
+
+```http
+  GET /api/v1/events/${event}
+```
+#### Event Güncelle
+
+```http
+  PUT /api/v1/events/${event}
+```
+#### Event Sil
+
+```http
+  Delete /api/v1/events/${event}
+```
+#### Event Medya
+
+```http
+  POST /api/v1/events/media
+```
+| Parametre | Tip     | 
+| :-------- | :------- |
+| `event`      | `Event` |
+   
+#### Posts
+
+```http
+  GET /api/v1/posts
+```
+
+```http
+  POST /api/v1/posts
+```
+
+```http
+  PUT /api/v1/posts
+```
+
+```http
+  DELETE /api/v1/posts
+```
+
+#### Post getir
+
+```http
+  GET /api/v1/posts/${post}
+```
+#### Post Güncelle
+
+```http
+  PUT /api/v1/posts/${post}
+```
+#### Post Sil
+
+```http
+  Delete /api/v1/posts/${post}
+```
+#### Post Medya
+
+```http
+  POST /api/v1/posts/media
+```
+| Parametre | Tip     | 
+| :-------- | :------- |
+| `post`      | `Post` |
+ 
+## Yazarlar ve Teşekkür
+
+- Ahmet TEKİN back-end geliştirme için.
+- Metehan SÖZEN front-end geliştirme için.
+- Tuhanan YAZKAN front-end geliştirme için.
+- Rabia GÜNEŞ front-end geliştirme için.
+
+  
