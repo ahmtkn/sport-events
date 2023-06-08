@@ -55,7 +55,7 @@ Daha sonrasında bağımlılıklarımızı kurmak için sport-events_php contain
 ```
 Artık containerın içindeyiz. Bundan sonraki adımda; 
 
-.env.example dosyasını kopyalayıp .env olarak değiştirmemiz gerekmektedir.
+.development.env dosyasını kopyalayıp .env olarak değiştirmemiz gerekmektedir.
 
 Daha sonra env dosyasında database congif bilgilerini güncelledikten sonra terminalden proje dizininin içinde şu kodu yazmamız gerekmektedir.
 
