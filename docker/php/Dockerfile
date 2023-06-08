@@ -102,14 +102,14 @@ RUN apt-get install -y \
     libjpeg62-turbo-dev \
     libpng-dev libxpm-dev \
     libfreetype6-dev
-#RUN docker-php-ext-configure gd \
-#    --with-gd \
-#    --with-webp-dir \
-#    --with-jpeg-dir \
-#    --with-png-dir \
-#    --with-zlib-dir \
-#    --with-xpm-dir \
-#    --with-freetype-dir
+RUN docker-php-ext-configure gd \
+    --with-gd \
+    --with-webp-dir \
+    --with-jpeg-dir \
+    --with-png-dir \
+    --with-zlib-dir \
+    --with-xpm-dir \
+    --with-freetype-dir
 RUN docker-php-ext-install gd
 
 RUN docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu

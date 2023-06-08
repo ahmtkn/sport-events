@@ -19,7 +19,7 @@
                             <div class="form-group col-md-2">
                                 <select class="w-100 form-control mt-lg-1 mt-md-2" id="sport_id" name="sport_id">
                                     <option value="">Select sport</option>
-                                    @foreach($earchSports as $id => $name)
+                                    @foreach($searchSports as $id => $name)
                                         <option value="{{ $id }}">{{ $name }}</option>
                                     @endforeach
                                 </select>
